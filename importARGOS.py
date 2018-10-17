@@ -39,8 +39,10 @@ while lineString:
         #Get attributes from second line
         obsLat = line2Data[2]
         obsLon = line2Data[5]
-        
-        print(tagID, obsLat, obsLon)
+        date = lineList[3]
+        time = lineList[4]
+        lc = lineList[7]
+        print(tagID, obsLat, obsLon, date, time, lc)
         break
     #Get the next line
     lineString = inputFileObj.readline()
