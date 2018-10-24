@@ -14,8 +14,13 @@
 import sys, os, arcpy
 
 # Set input variables (Hard-wired)
-inputFile = 'V:/ARGOSTracking/Data/ARGOSData/1997dg.txt'
-outputFC = "V:/ARGOSTracking/Scratch/ARGOStrack.shp"
+inputFile = '../Data/ARGOSData/1997dg.txt'
+outputFC = '../Scratch/ARGOStrack.shp'
+
+## Prepare a new feature class to which we'll add tracking points
+# Create an empty feature class; requires the path and name as separate parameters
+outPath,outName = os.path.split(outputFC)
+arcpy.CreateFeatureclass_management(outPath, outName)
 
 #Open the ARGOS data file for reading
 inputFileObj = open(inputFile, 'r')
@@ -43,7 +48,7 @@ while lineString:
         time = lineList[4]
         lc = lineList[7]
         print(tagID, obsLat, obsLon, date, time, lc)
-        break
+       
     #Get the next line
     lineString = inputFileObj.readline()
 
