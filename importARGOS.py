@@ -24,6 +24,11 @@ arcpy.env.overwriteOutput = True
 outPath,outName = os.path.split(outputFC)
 arcpy.CreateFeatureclass_management(outPath, outName,'POINT','','','',outputSR)
 
+# Add TagID, LC, IQ, and Date fields to the output feature class
+arcpy.AddField_management(outputFC,"TagID","LONG")
+arcpy.AddField_management(outputFC,"LC","TEXT")
+arcpy.AddField_management(outputFC,"Date","DATE")
+
 #Open the ARGOS data file for reading
 inputFileObj = open(inputFile, 'r')
 
@@ -49,7 +54,14 @@ while lineString:
         date = lineList[3]
         time = lineList[4]
         lc = lineList[7]
+        
+        #Print results
         print(tagID, obsLat, obsLon, date, time, lc)
+
+        # Construct a point object from the feature class
+        obsPoint = arcpy.Point()
+        obsPoint.X = obsLon
+        obsPoint.Y = obsLat
        
     #Get the next line
     lineString = inputFileObj.readline()
